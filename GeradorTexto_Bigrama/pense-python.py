@@ -9,6 +9,7 @@ Codificação escrita seguindo o passo a passo do livro Pense em Python
 
 
 def main():
+    # variáveis com nomes dos arquivos
     input_file = "drjekyll.txt"
     output_file = "cln_txt.txt"
 
@@ -16,14 +17,17 @@ def main():
     if not os.path.exists(input_file):
         sys.exit(f"Arquivo {input_file} não existe")
         
+    # limpa e escreve conteúdo de um arquivo para outro
     clean_file(input_file, output_file)
 
 
+# define se encontrou a parte de metadados do texto
 def is_section_marker(line):
     '''se a linha começar com a marcação, retorna True'''
     return line.strip().startswith("*** ")
 
 
+# transfere conteúdo de um arquivo para outro, ignorando a seção de metadados
 def clean_file(input_file, output_file):
     '''Captura texto desejado pra análise de um arquivo .txt'''
     # verifica se está na seção desejada do texto
