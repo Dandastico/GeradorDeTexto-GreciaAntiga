@@ -6,31 +6,26 @@ Codificação escrita seguindo o passo a passo do livro Pense em Python
 
 def main():
     input_file = "dr_jekyll.txt"
-    output_file = "txt.txt"
+    output_file = "cln_txt.txt"
 
     clean_file(input_file, output_file)
 
 
 def is_special_line(line):
-    return line.strip().startswith('*** ')
+    # retira espaços em brancos, retorna None se tiver apenas espaços
+    line = line.strip()
+    # return só retorna o que não começar com *** ou None
+    return line.strip().startswith("*** ") or not line
 
 
 def clean_file(input_file, output_file):
-    reader = open(input_file, encoding="utf-8")
-    writer = open(output_file, 'w')
-
-    for line in reader:
-        if is_special_line(line):
-            break
-
-    for line in reader:
-        if is_special_line(line):
-            break
-        writer.write(line)
-
-    reader.close()
-    writer.close()
+    # abrir input como loop para ler linha por linha
+    with open(input_file, encoding="utf-8") as reader:
+        # abrir output como loop para escrever linha por linha
+        with open(output_file, 'w', encoding="utf-8") as writer:
+            for line in reader:
+                if not is_special_line(line):
+                    writer.write(line)
 
 
-    if __name__ == "__main__":
-        main()
+main()
