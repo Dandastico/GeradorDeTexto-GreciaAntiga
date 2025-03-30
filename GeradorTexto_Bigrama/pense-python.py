@@ -21,7 +21,7 @@ def main():
     clean_file(input_file, output_file)
 
     # salvar os bigramas que compõe o texto limpo
-    bigrams = get_bigrams(output_file)
+    bigrams_map = get_bigrams(output_file)
 
 
 # define se encontrou a parte de metadados do texto
