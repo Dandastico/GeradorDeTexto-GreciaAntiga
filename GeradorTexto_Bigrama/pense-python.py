@@ -20,6 +20,9 @@ def main():
     # limpa e escreve conteúdo de um arquivo para outro
     clean_file(input_file, output_file)
 
+    # salvar os bigramas que compõe o texto limpo
+    bigrams = get_bigrams(output_file)
+
 
 # define se encontrou a parte de metadados do texto
 def is_section_marker(line):
@@ -33,20 +36,38 @@ def clean_file(input_file, output_file):
     # verifica se está na seção desejada do texto
     targeted_section = False
 
-    # abrir input como loop para ler linha por linha
-    with open(input_file, 'r',encoding="utf-8") as reader:
-        # abrir output como loop para escrever linha por linha
-        with open(output_file, 'w', encoding="utf-8") as writer:
-            for line in reader:
-                # se a função retornar True
-                if is_section_marker(line):
-                    # inverte valor em targeted_section
-                    targeted_section = not targeted_section
-                    # "continue" garante que a linha com "*** " não seja escrito
-                    continue
-                # se o sinalizador da posição desejada for True
-                if targeted_section:    
-                    writer.write(line)
+    try:
+        # abrir input como loop para ler linha por linha
+        with open(input_file, 'r',encoding="utf-8") as reader:
+            # abrir output como loop para escrever linha por linha
+            with open(output_file, 'w', encoding="utf-8") as writer:
+                for line in reader:
+                    # se a função retornar True
+                    if is_section_marker(line):
+                        # inverte valor em targeted_section
+                        targeted_section = not targeted_section
+                        # "continue" garante que a linha com "*** " não seja escrito
+                        continue
+                    # se o sinalizador da posição desejada for True
+                    if targeted_section:    
+                        writer.write(line)
+    except:
+        sys.exit("Deu num ao manipular os arquivos")
+
+
+# compõe bigramas
+def get_bigrams(cln_file):
+    '''
+    Compõe bigramas usando o modelo de Markov
+    Rettorna um dicionário
+    Chave: string
+    Valor: lista de strings que seguiram a string chave no texto avaliado
+    '''
+    bigrams_map = {}
+    for line in open(cln_file):
+        for i in range(len(line)-1):
+            bigram = line[i], line[i + 1]
+            print(bigram)
 
 
 if __name__ == "__main__":
