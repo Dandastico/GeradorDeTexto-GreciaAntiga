@@ -11,7 +11,7 @@ Codificação escrita seguindo o passo a passo do livro Pense em Python
 def main():
     # variáveis com nomes dos arquivos
     input_file = "drjekyll.txt"
-    output_file = "cln_txt.txt"
+    output_file = "test.txt"
 
     # checar se arquivo existe
     if not os.path.exists(input_file):
@@ -20,8 +20,8 @@ def main():
     # limpa e escreve conteúdo de um arquivo para outro
     clean_file(input_file, output_file)
 
-    # salvar os bigramas que compõe o texto limpo
-    bigrams_map = get_bigrams(output_file)
+    # salvar os bigramas que compõe o texto limpo numa lista
+    bigras = get_bigrams(output_file)
 
 
 # define se encontrou a parte de metadados do texto
@@ -63,11 +63,16 @@ def get_bigrams(cln_file):
     Chave: string
     Valor: lista de strings que seguiram a string chave no texto avaliado
     '''
-    bigrams_map = {}
+    # lista de pontuação pra retirar
+    punctuation = ['.', ',', '!', '?']
+
     for line in open(cln_file):
-        for i in range(len(line)-1):
-            bigram = line[i], line[i + 1]
-            print(bigram)
+        line = line.split()
+        for word in line:
+            for char in word:
+                if char in punctuation:
+                    word = word.replace(char, '')
+            print(word)
 
 
 if __name__ == "__main__":
